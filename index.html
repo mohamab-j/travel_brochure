@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stellaris Space Resort — Luxury Orbital Getaway</title>
+  <style>
+    /* ═══════════════════════════════════════════
+       CSS VARIABLES
+    ═══════════════════════════════════════════ */
+    :root {
+      --primary-color:    #0a0e2e;
+      --secondary-color:  #12103a;
+      --text-color:       #e0e8ff;
+      --accent-color:     #00d4ff;
+      --accent-secondary: #7b2fff;
+      --spacing:          1rem;
+      --border-radius:    10px;
+      --card-bg:          rgba(255,255,255,0.04);
+      --nav-height:       68px;
+    }
+
+    /* ═══════════════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════════════ */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--primary-color);
+      color: var(--text-color);
+      line-height: 1.65;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    /* ═══════════════════════════════════════════
+       PAGE GRID  (header / main / footer)
+    ═══════════════════════════════════════════ */
+    .page-grid {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      min-height: 100vh;
+    }
+
+    /* ═══════════════════════════════════════════
+       HEADER & NAV
+    ═══════════════════════════════════════════ */
+    header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      border-bottom: 2px solid rgba(0,212,255,0.35);
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: var(--nav-height);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 calc(var(--spacing)*2);
+    }
+
+    .nav-logo {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--accent-color);
+      text-decoration: none;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: calc(var(--spacing)*2.2);
+    }
+
+    .nav-links a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-size: 0.92rem;
+      letter-spacing: 1px;
+      padding-bottom: 3px;
+      border-bottom: 2px solid transparent;
+      transition: color .25s, border-color .25s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-color);
+      border-bottom-color: var(--accent-color);
+    }
+
+    /* ═══════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════ */
+    .hero {
+      min-height: 88vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: calc(var(--spacing)*5) calc(var(--spacing)*2);
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(10,14,46,.85) 0%, rgba(18,5,40,.95) 100%),
+        url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=1600&auto=format&fit=crop')
+        center/cover no-repeat;
+    }
+
+    /* animated star-glow orb */
+    .hero::before {
+      content:'';
+      position:absolute;
+      width:700px; height:700px;
+      background: radial-gradient(circle, rgba(0,212,255,.12) 0%, transparent 70%);
+      top:50%; left:50%;
+      transform:translate(-50%,-50%);
+      animation: pulse 6s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%,100%{ opacity:.6; transform:translate(-50%,-50%) scale(1); }
+      50%     { opacity:1;  transform:translate(-50%,-50%) scale(1.12); }
+    }
+
+    .hero-content { position:relative; z-index:1; max-width:760px; }
+
+    .hero-tagline {
+      display:block;
+      font-size:.8rem;
+      letter-spacing:5px;
+      color:var(--accent-color);
+      text-transform:uppercase;
+      margin-bottom:var(--spacing);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.6rem, 7vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.08;
+      margin-bottom: calc(var(--spacing)*1.5);
+      background: linear-gradient(135deg, #fff 30%, var(--accent-color) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: rgba(224,232,255,.8);
+      max-width: 580px;
+      margin: 0 auto calc(var(--spacing)*2.5);
+    }
+
+    .hero-cta { display:flex; gap:var(--spacing); justify-content:center; flex-wrap:wrap; }
+
+    /* ═══════════════════════════════════════════
+       BUTTONS
+    ═══════════════════════════════════════════ */
+    .btn {
+      display: inline-block;
+      padding: .75rem 2rem;
+      background: var(--accent-color);
+      color: var(--primary-color);
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      font-size: .95rem;
+      transition: all .3s ease;
+      border: 2px solid var(--accent-color);
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn:hover {
+      background: #fff;
+      border-color: #fff;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0,212,255,.35);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--accent-color);
+    }
+
+    .btn-outline:hover {
+      background: var(--accent-color);
+      color: var(--primary-color);
+    }
+
+    /* ═══════════════════════════════════════════
+       MAIN & SECTIONS
+    ═══════════════════════════════════════════ */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 calc(var(--spacing)*2);
+      width: 100%;
+    }
+
+    section { padding: calc(var(--spacing)*6) 0; }
+
+    .section-header { text-align:center; margin-bottom:calc(var(--spacing)*3.5); }
+
+    .section-label {
+      display: block;
+      font-size: .75rem;
+      letter-spacing: 5px;
+      color: var(--accent-color);
+      text-transform: uppercase;
+      margin-bottom:.5rem;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.8rem,4vw,2.6rem);
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .section-divider {
+      width:60px; height:3px;
+      background: linear-gradient(90deg, var(--accent-color), var(--accent-secondary));
+      border-radius:3px;
+      margin: calc(var(--spacing)*.8) auto 0;
+    }
+
+    /* ═══════════════════════════════════════════
+       ABOUT SECTION
+    ═══════════════════════════════════════════ */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: calc(var(--spacing)*4);
+      align-items: center;
+    }
+
+    .about-image {
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 0 0 2px rgba(0,212,255,.2), 0 30px 60px rgba(0,0,0,.5);
+    }
+
+    .about-image img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      transition: transform .5s ease;
+    }
+
+    .about-image:hover img { transform: scale(1.04); }
+
+    .about-text h3 {
+      font-size: 1.45rem;
+      color: var(--accent-color);
+      margin-bottom: var(--spacing);
+    }
+
+    .about-text p {
+      color: rgba(224,232,255,.78);
+      margin-bottom: var(--spacing);
+      line-height: 1.85;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: var(--spacing);
+      margin-top: calc(var(--spacing)*2);
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(0,212,255,.2);
+      border-radius: var(--border-radius);
+      padding: calc(var(--spacing)*1.2) var(--spacing);
+      text-align: center;
+      transition: border-color .3s, transform .3s;
+    }
+
+    .stat-card:hover {
+      border-color: var(--accent-color);
+      transform: translateY(-4px);
+    }
+
+    .stat-number {
+      display: block;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--accent-color);
+    }
+
+    .stat-label {
+      font-size: .78rem;
+      color: rgba(224,232,255,.55);
+      letter-spacing: 1px;
+    }
+
+    /* ═══════════════════════════════════════════
+       PACKAGES TABLE SECTION
+    ═══════════════════════════════════════════ */
+    #packages {
+      background: var(--secondary-color);
+      border-radius: 20px;
+      padding: calc(var(--spacing)*4);
+      border: 1px solid rgba(0,212,255,.1);
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      border-radius: 12px;
+      margin-top: calc(var(--spacing)*2);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .93rem;
+      min-width: 640px;
+    }
+
+    thead {
+      background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-secondary) 100%);
+    }
+
+    thead th {
+      padding: calc(var(--spacing)*1.1) var(--spacing);
+      text-align: left;
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-size: .8rem;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid rgba(0,212,255,.08);
+      transition: background .2s;
+    }
+
+    tbody tr:hover { background: rgba(0,212,255,.05); }
+
+    tbody td {
+      padding: calc(var(--spacing)*1.1) var(--spacing);
+      color: rgba(224,232,255,.85);
+    }
+
+    .price { font-weight:700; color:#fff; font-size:1.05rem; }
+
+    .badge {
+      display:inline-block;
+      padding:.2rem .7rem;
+      border-radius:50px;
+      font-size:.72rem;
+      font-weight:700;
+    }
+
+    .badge-popular { background:rgba(0,212,255,.12); color:var(--accent-color); border:1px solid var(--accent-color); }
+    .badge-luxury  { background:rgba(123,47,255,.12); color:#b080ff; border:1px solid #7b2fff; }
+    .badge-budget  { background:rgba(0,255,140,.12); color:#00ff96; border:1px solid #00cc77; }
+
+    /* ═══════════════════════════════════════════
+       GALLERY
+    ═══════════════════════════════════════════ */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: var(--spacing);
+    }
+
+    .gallery-item {
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      transition: transform .45s ease;
+    }
+
+    .gallery-item:hover img { transform: scale(1.07); }
+
+    .gallery-caption {
+      position:absolute; bottom:0; left:0; right:0;
+      padding:.7rem var(--spacing);
+      background: linear-gradient(transparent, rgba(0,0,0,.75));
+      font-size:.82rem;
+      color:rgba(255,255,255,.9);
+      opacity:0;
+      transition:opacity .3s;
+    }
+
+    .gallery-item:hover .gallery-caption { opacity:1; }
+
+    /* ═══════════════════════════════════════════
+       CONTACT / FORM SECTION
+    ═══════════════════════════════════════════ */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: calc(var(--spacing)*4);
+      align-items: start;
+    }
+
+    .contact-info h3 {
+      font-size: 1.4rem;
+      color: #fff;
+      margin-bottom: var(--spacing);
+    }
+
+    .contact-info p {
+      color: rgba(224,232,255,.7);
+      line-height: 1.85;
+      margin-bottom: calc(var(--spacing)*1.8);
+    }
+
+    .contact-detail {
+      display:flex;
+      align-items:center;
+      gap:.8rem;
+      margin-bottom: calc(var(--spacing)*.9);
+      color:rgba(224,232,255,.8);
+      font-size:.9rem;
+    }
+
+    .contact-icon {
+      width:38px; height:38px;
+      background: rgba(0,212,255,.1);
+      border:1px solid rgba(0,212,255,.3);
+      border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1rem;
+      flex-shrink:0;
+    }
+
+    .form-card {
+      background: var(--card-bg);
+      border:1px solid rgba(0,212,255,.15);
+      border-radius:16px;
+      padding: calc(var(--spacing)*2.5);
+    }
+
+    .form-row {
+      display:flex;
+      gap:var(--spacing);
+    }
+
+    .form-group {
+      display:flex;
+      flex-direction:column;
+      gap:.4rem;
+      margin-bottom:calc(var(--spacing)*1.2);
+      flex:1;
+    }
+
+    label {
+      font-size:.82rem;
+      color:rgba(224,232,255,.65);
+      letter-spacing:.5px;
+    }
+
+    input, select, textarea {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(0,212,255,.2);
+      border-radius: var(--border-radius);
+      color: var(--text-color);
+      padding: .75rem var(--spacing);
+      font-size: .93rem;
+      width: 100%;
+      transition: border-color .25s, box-shadow .25s;
+      font-family: inherit;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 3px rgba(0,212,255,.12);
+    }
+
+    select option { background:var(--primary-color); color:var(--text-color); }
+
+    textarea { resize:vertical; min-height:120px; }
+
+    .btn-submit { width:100%; padding:.9rem; border-radius:var(--border-radius); font-size:1rem; }
+
+    /* ═══════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════ */
+    footer {
+      background: #05080f;
+      border-top:1px solid rgba(0,212,255,.12);
+      padding: calc(var(--spacing)*2.5) calc(var(--spacing)*2);
+    }
+
+    .footer-inner {
+      max-width:1200px; margin:0 auto;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:var(--spacing);
+    }
+
+    .footer-logo {
+      font-size:1.15rem;
+      font-weight:800;
+      color:var(--accent-color);
+      letter-spacing:3px;
+    }
+
+    .footer-links {
+      display:flex;
+      list-style:none;
+      gap:calc(var(--spacing)*1.8);
+    }
+
+    .footer-links a {
+      color:rgba(224,232,255,.45);
+      text-decoration:none;
+      font-size:.88rem;
+      transition:color .25s;
+    }
+
+    .footer-links a:hover { color:var(--accent-color); }
+
+    .footer-copy {
+      max-width:1200px; margin:calc(var(--spacing)*1.2) auto 0;
+      padding-top:var(--spacing);
+      border-top:1px solid rgba(255,255,255,.05);
+      color:rgba(224,232,255,.28);
+      font-size:.8rem;
+      text-align:center;
+    }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE — LARGE >= 1024px
+    ═══════════════════════════════════════════ */
+    @media (min-width:1024px) {
+      .about-grid        { grid-template-columns:1fr 1fr; }
+      .gallery-grid      { grid-template-columns:repeat(3,1fr); }
+      .contact-layout    { grid-template-columns:1fr 1.6fr; }
+    }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE — MEDIUM 768px–1023px
+    ═══════════════════════════════════════════ */
+    @media (min-width:768px) and (max-width:1023px) {
+      .about-grid        { grid-template-columns:1fr; }
+      .about-image img   { height:320px; }
+      .gallery-grid      { grid-template-columns:repeat(2,1fr); }
+      .contact-layout    { grid-template-columns:1fr; }
+      .stats-grid        { grid-template-columns:repeat(3,1fr); }
+      #packages          { padding:calc(var(--spacing)*2.5); }
+      .hero h1           { font-size:3.2rem; }
+    }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE — SMALL <= 767px
+    ═══════════════════════════════════════════ */
+    @media (max-width:767px) {
+      :root { --spacing:.85rem; }
+
+      nav {
+        flex-direction:column;
+        height:auto;
+        padding:var(--spacing) 0;
+        gap:.5rem;
+      }
+
+      .nav-links {
+        gap:var(--spacing);
+        flex-wrap:wrap;
+        justify-content:center;
+      }
+
+      .hero { min-height:100svh; }
+      .hero h1 { font-size:2.3rem; }
+      .hero p  { font-size:1rem; }
+
+      .about-grid        { grid-template-columns:1fr; }
+      .about-image img   { height:240px; }
+      .stats-grid        { grid-template-columns:1fr; gap:.6rem; }
+      .gallery-grid      { grid-template-columns:1fr; }
+      .contact-layout    { grid-template-columns:1fr; }
+      .form-row          { flex-direction:column; }
+
+      #packages {
+        padding:calc(var(--spacing)*2) var(--spacing);
+        border-radius:12px;
+      }
+
+      .footer-inner { flex-direction:column; text-align:center; }
+      .footer-links { justify-content:center; flex-wrap:wrap; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-grid">
+
+  <!-- ══════════════ HEADER ══════════════ -->
+  <header>
+    <nav>
+      <a href="#" class="nav-logo">✦ STELLARIS</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#packages">Packages</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ══════════════ HERO ══════════════ -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-tagline">✦ Beyond Earth · Beyond Imagination ✦</span>
+      <h1>Stellaris<br>Space Resort</h1>
+      <p>Experience five-star luxury 400 km above Earth. Zero-gravity spas, nebula dining, and 16 sunrises every day.</p>
+      <div class="hero-cta">
+        <a href="#packages" class="btn">Explore Packages</a>
+        <a href="#contact"  class="btn btn-outline">Book a Flight</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ MAIN ══════════════ -->
+  <main>
+
+    <!-- ── ABOUT ── -->
+    <section id="about">
+      <div class="section-header">
+        <span class="section-label">Our Story</span>
+        <h2>Welcome to Stellaris</h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-image">
+          <img
+            src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=800&auto=format&fit=crop"
+            alt="Earth as seen from orbit — a blue marble suspended in the darkness of space"
+          />
+        </div>
+
+        <div class="about-text">
+          <h3>The World's First Orbital Luxury Resort</h3>
+          <p>Founded in 2041 and orbiting at 400 km above the planet, Stellaris Space Resort is the pinnacle of human achievement and hospitality. Every detail — from our zero-gravity sleeping pods to our panoramic observation domes — has been engineered to give you an experience that is literally out of this world.</p>
+          <p>We complete a full orbit of Earth every 92 minutes, which means guests enjoy up to 16 breathtaking sunrises and sunsets every single day. Our crew of 120 specialists is dedicated to ensuring your comfort, safety, and wonder at every moment of your stay.</p>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <span class="stat-number">400km</span>
+              <span class="stat-label">Above Earth</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">12K+</span>
+              <span class="stat-label">Guests Hosted</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">16×</span>
+              <span class="stat-label">Sunrises/Day</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PACKAGES ── -->
+    <section id="packages">
+      <div class="section-header">
+        <span class="section-label">Choose Your Journey</span>
+        <h2>Travel Packages</h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Package</th>
+              <th>Duration</th>
+              <th>Accommodation</th>
+              <th>What's Included</th>
+              <th>Price (per person)</th>
+              <th>Tag</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Orbital Explorer</strong></td>
+              <td>3 Days / 2 Nights</td>
+              <td>Standard Pod Suite</td>
+              <td>Launch &amp; return, all meals, 1 spacewalk</td>
+              <td class="price">$250,000</td>
+              <td><span class="badge badge-budget">Starter</span></td>
+            </tr>
+            <tr>
+              <td><strong>Nebula Voyager</strong></td>
+              <td>7 Days / 6 Nights</td>
+              <td>Panoramic Dome Suite</td>
+              <td>Launch &amp; return, all meals, 3 spacewalks, zero-g spa</td>
+              <td class="price">$680,000</td>
+              <td><span class="badge badge-popular">Most Popular</span></td>
+            </tr>
+            <tr>
+              <td><strong>Cosmos Elite</strong></td>
+              <td>14 Days / 13 Nights</td>
+              <td>Private Station Wing</td>
+              <td>Private shuttle, chef dining, unlimited spacewalks, lunar flyby</td>
+              <td class="price">$1,500,000</td>
+              <td><span class="badge badge-luxury">Luxury</span></td>
+            </tr>
+            <tr>
+              <td><strong>Honeymoon Orbit</strong></td>
+              <td>5 Days / 4 Nights</td>
+              <td>Couples Gravity Suite</td>
+              <td>Couples launch, nebula dinner, 2 spacewalks, couples spa</td>
+              <td class="price">$950,000</td>
+              <td><span class="badge badge-popular">Romantic</span></td>
+            </tr>
+            <tr>
+              <td><strong>Youth Discovery</strong></td>
+              <td>4 Days / 3 Nights</td>
+              <td>Crew Bunkroom</td>
+              <td>Launch, STEM education program, meals, 1 spacewalk (ages 18–25)</td>
+              <td class="price">$180,000</td>
+              <td><span class="badge badge-budget">Budget Pick</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ── GALLERY ── -->
+    <section id="gallery">
+      <div class="section-header">
+        <span class="section-label">Visual Tour</span>
+        <h2>Life at Stellaris</h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="gallery-grid">
+        <article class="gallery-item">
+          <img
+            src="https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=700&auto=format&fit=crop"
+            alt="Astronaut performing a spacewalk with Earth visible below"
+          />
+          <span class="gallery-caption">✦ Spacewalk Experience</span>
+        </article>
+        <article class="gallery-item">
+          <img
+            src="https://images.unsplash.com/photo-1454789548928-9efd52dc4031?w=700&auto=format&fit=crop"
+            alt="Deep space stars and the Milky Way galaxy viewed from the observation deck"
+          />
+          <span class="gallery-caption">✦ Observation Deck View</span>
+        </article>
+        <article class="gallery-item">
+          <img
+            src="https://images.unsplash.com/photo-1610296669228-602fa827fc1f?w=700&auto=format&fit=crop"
+            alt="The Earth glowing from the porthole window of the space station"
+          />
+          <span class="gallery-caption">✦ Earth from Your Window</span>
+        </article>
+      </div>
+    </section>
+
+    <!-- ── CONTACT ── -->
+    <section id="contact">
+      <div class="section-header">
+        <span class="section-label">Get in Touch</span>
+        <h2>Plan Your Journey</h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="contact-layout">
+        <div class="contact-info">
+          <h3>Ready for Launch?</h3>
+          <p>Our orbital travel consultants are on standby to help you plan the trip of a lifetime — quite literally. Fill out the inquiry form and we'll respond within 48 Earth hours.</p>
+          <div class="contact-detail">
+            <div class="contact-icon">📍</div>
+            <span>Stellaris Launch Center, Cape Canaveral, FL 32899</span>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-icon">📡</div>
+            <span>orbital@stellarisresort.space</span>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-icon">🚀</div>
+            <span>Next available launch window: March 14, 2045</span>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-icon">🕐</div>
+            <span>Mission Control: 24 / 7 / 365</span>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <form>
+            <!-- Name + Email row -->
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Your full name" required />
+              </div>
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="you@example.com" required />
+              </div>
+            </div>
+
+            <!-- Package dropdown -->
+            <div class="form-group">
+              <label for="package">Travel Package</label>
+              <select id="package" name="package" required>
+                <option value="" disabled selected>Select a package…</option>
+                <option value="orbital-explorer">Orbital Explorer — $250,000</option>
+                <option value="nebula-voyager">Nebula Voyager — $680,000</option>
+                <option value="cosmos-elite">Cosmos Elite — $1,500,000</option>
+                <option value="honeymoon-orbit">Honeymoon Orbit — $950,000</option>
+                <option value="youth-discovery">Youth Discovery — $180,000</option>
+              </select>
+            </div>
+
+            <!-- Comments textarea -->
+            <div class="form-group">
+              <label for="comments">Comments or Special Requirements</label>
+              <textarea id="comments" name="comments" placeholder="Dietary needs, medical information, special requests, questions…"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-submit">🚀 Send My Inquiry</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main><!-- /main -->
+
+  <!-- ══════════════ FOOTER ══════════════ -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-logo">✦ STELLARIS</span>
+      <ul class="footer-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#packages">Packages</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <p class="footer-copy">
+      © 2045 Stellaris Space Resort — All rights reserved &nbsp;|&nbsp;
+      Mohamed Abdulla · CIS 525 Web Technologies
+    </p>
+  </footer>
+
+</div><!-- /page-grid -->
+</body>
+</html>
