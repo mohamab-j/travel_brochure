@@ -3,7 +3,7 @@
 
 A responsive travel brochure for a fictional space resort built with HTML and CSS.
 
-🔗 **Live Site:** https://YOUR-USERNAME.github.io/travel-brochure
+🔗 **Live Site:** https://mohamab-j.github.io/travel_brochure/
 
 ## Responsive Screenshots
 
